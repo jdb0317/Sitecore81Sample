@@ -1,0 +1,17 @@
+﻿@using Sitecore81.Core.Glass;
+@using Sitecore81.Core.Helper;
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<IEnumerable<IBasePage>>
+
+<nav class="main-menu" aria-label="Main Navigation">
+    <div class="container">
+        <a href="@Extensions.SiteHomeUrl" aria-label="Homepage link">
+            <img src="~/Images/XCentiumLogo20152x.png" alt="Site Logo" class="site-logo" />
+        </a>
+        <ul class="list-inline">
+            @foreach (var item in Model)
+            {
+                <li><a href="@item.GetItem().GetItemFriendlyUrl()" aria-label="@item.Title">@item.Title</a></li>
+            }
+        </ul>
+    </div>
+</nav>

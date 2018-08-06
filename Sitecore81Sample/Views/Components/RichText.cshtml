@@ -1,0 +1,15 @@
+﻿@using Sitecore81.Core.Glass;
+@using Sitecore81.Core.Helper;
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<object>
+
+@if (Model is IGeneric_Rich_Text_Tile)
+{
+    var tile = (IGeneric_Rich_Text_Tile)Model;
+    var addedClasses = string.Join(" ", tile.CssClasses
+        .Where(c => !string.IsNullOrEmpty(c.Class))
+        .Select(c => c.Class));
+
+    <div class="height-100 @addedClasses" style="@tile.InLineCssStyling">
+        <div>@Editable(tile, t => t.Copy)</div>
+    </div>
+}

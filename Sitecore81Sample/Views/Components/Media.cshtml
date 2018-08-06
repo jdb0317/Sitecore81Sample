@@ -1,0 +1,33 @@
+﻿@using Sitecore81.Core.Glass;
+@using Sitecore81.Core.Helper;
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<object>
+
+@if (Model is IGeneric_Media_Tile)
+{
+    var tile = (IGeneric_Media_Tile)Model;
+    var addedClasses = string.Join(" ", tile.CssClasses
+        .Where(c => !string.IsNullOrEmpty(c.Class))
+        .Select(c => c.Class));
+
+    <div class="generic-media-tile @addedClasses" style="@tile.InLineCssStyling">
+        @if (tile.MediaType.MediaName.ToLower() == "image")
+        {
+            if (!string.IsNullOrEmpty(tile.DesktopImage.GetSrc()))
+            {
+                 <img src="@tile.DesktopImage.GetSrc()" alt="@tile.DesktopImage.GetAltValue()" class="img-responsive full-width img-d">
+            }
+            if (!string.IsNullOrEmpty(tile.TabletImage.GetSrc()))
+            {
+                 <img src="@tile.TabletImage.GetSrc()" alt="@tile.TabletImage.GetAltValue()" class="img-responsive full-width img-t">
+            }
+            if (!string.IsNullOrEmpty(tile.MobileImage.GetSrc()))
+            {
+                 <img src="@tile.MobileImage.GetSrc()" alt="@tile.MobileImage.GetAltValue()" class="img-responsive full-width img-m">
+            }
+        }
+        else if (tile.MediaType.MediaName.ToLower() == "video url")
+        {
+            <div class="video-container">@Html.Raw(tile.VideoEmbedUrl)</div>
+        }
+    </div>
+}

@@ -1,0 +1,32 @@
+﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Sitecore81Sample.ViewModels.GenericTileRowViewModel>
+
+@if (Model.HasBackgroundImage)
+{
+    <style>
+        @@media only screen and (min-width: 1001px) { .generic-tile-row.@Model.GuidId { background: url('@Model.DesktopBgImage.Src'); background-size: 100% 100%; } }
+        @@media only screen and (max-width: 1000px) { .generic-tile-row.@Model.GuidId { background: url('@Model.TabletBgImage.Src'); background-size: 100% 100%; } }
+        @@media only screen and (max-width: 750px) { .generic-tile-row.@Model.GuidId { background: url('@Model.MobileBgImage.Src'); background-size: 100% 100%; } }
+    </style>
+}
+@if (Model.ForceHeightToMatchBgImage)
+{
+    <style>
+        @@media only screen and (min-width: 1001px) { .generic-tile-row.@Model.GuidId { min-height: @Model.DesktopBgImageHeight } }
+        @@media only screen and (max-width: 1000px) { .generic-tile-row.@Model.GuidId { min-height: @Model.TabletBgImageHeight } }
+        @@media only screen and (max-width: 750px) {  .generic-tile-row.@Model.GuidId { min-height: @Model.MobileBgImageHeight } }
+    </style>
+}
+
+<div class="generic generic-tile-row clearfix @Model.GuidId @Model.ContainerClass @Model.RowDefinition.AdditionalCss" style="@Model.InLineCss">
+    <div class="row @Model.Margins @Model.FlexPoints @Model.CssClasses">
+        @for (var i = 0; i < Model.Columns.Count; i++)
+        {
+            if (i + 1 <= Model.Tiles.Count && Model.Tiles[i] != null)
+            {
+                <div class="@Model.Columns[i].ColumnDefinition @Model.PaddingClass">
+                    @Html.Partial(Model.TileCshtmlViews[i], Model.Tiles[i])
+                </div>
+            }
+        }
+    </div>
+</div>

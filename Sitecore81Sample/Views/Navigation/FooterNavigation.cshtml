@@ -1,0 +1,26 @@
+﻿@using Sitecore81Sample.ViewModels;
+@using Sitecore81.Core.Helper;
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<FooterSettingsVM>
+
+
+<div class="footer-content container-fluid">
+    <div class="container">
+        <div>@Editable(Model.FooterSettings, m => m.Footer_Text)</div>
+        @if (Model.FooterSettings.Show_Navigation_Links)
+        {
+            <nav>
+                <ul class="list-inline">
+                    @foreach (var item in Model.Navigation)
+                    {
+                        if (item.Active && item.Display_In_Menu)
+                        {
+                            <li><a href="@item.GetItem().GetItemFriendlyUrl()">@item.Title</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        }
+        <div class="disclaimer">@Editable(Model.FooterSettings, m => m.Disclaimer_1)</div>
+        <div class="disclaimer">@Editable(Model.FooterSettings, m => m.Disclaimer_2)</div>
+    </div>
+</div>

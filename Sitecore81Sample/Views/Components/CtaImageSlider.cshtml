@@ -1,0 +1,46 @@
+﻿@using Sitecore81.Core.Glass;
+@using Sitecore81.Core.Helper;
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<ICTA_Image_Slider_Group>
+
+@{ 
+    var guid = Guid.NewGuid();
+    var activeStatus = "active";
+}
+<div id="carouselComponent_@guid" class="carousel slide" data-ride="carousel" aria-label="Carousel Image Slider">
+    <div class="carousel-inner">
+        @foreach (var slide in Model.Slides)
+        {
+            <div class="carousel-item @activeStatus" style="background-image: url(@slide.Image.GetSrc())">
+                <img src="@slide.Image.GetSrc()" alt="@slide.Image.GetAltValue()">
+
+                @if (!string.IsNullOrEmpty(slide.Title) || !string.IsNullOrEmpty(slide.Blurb) || !string.IsNullOrEmpty(slide.CTA_Text))
+                {
+                    <div class="carousel-caption color-white">
+                        <div class="caption">@Editable(slide, s => s.Title)</div>
+                        <hr>
+                        <div>@Editable(slide, s => s.Blurb)</div>
+
+                        @if (!string.IsNullOrEmpty(slide.CTA_Text))
+                        {
+                            <a class="button" href="@slide.CTA_Destination.GetLinkUrl()" 
+                            target="@slide.CTA_Destination.GetTargetValue()">@Editable(slide, s => s.CTA_Text)</a>
+                        }
+                    </div>
+                }
+            </div>
+
+            if(activeStatus == "active")
+            {
+                activeStatus = "";
+            }
+        }
+    </div>
+    <a class="carousel-control-prev left" href="#carouselComponent_@guid" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon icon-arrow-circle-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next right" href="#carouselComponent_@guid" role="button" data-slide="next">
+        <span class="carousel-control-next-icon icon-arrow-circle-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

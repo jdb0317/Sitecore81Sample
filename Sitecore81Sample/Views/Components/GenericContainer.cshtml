@@ -1,0 +1,30 @@
+﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Sitecore81Sample.ViewModels.GenericContainerViewModel>
+
+@if (Model.HasBackgroundImage)
+{
+    <style>
+        @@media only screen and (min-width: 1001px) {
+            .generic-container.@Model.GuidId { background: url('@Model.DesktopBgImageSrc'); background-size: 100% 100%; } }
+        @@media only screen and (max-width: 1000px) {
+            .generic-container.@Model.GuidId { background: url('@Model.TabletBgImageSrc'); background-size: 100% 100%; } }
+        @@media only screen and (max-width: 750px) {
+            .generic-container.@Model.GuidId { background: url('@Model.MobileBgImageSrc'); background-size: 100% 100%; } }
+    </style>
+}
+@if (Model.ForceHeightToMatchBgImage)
+{
+    <style>
+        @@media only screen and (min-width: 1001px) {
+            .generic-container.@Model.GuidId { min-height: @Model.DesktopBgImageHeight } }
+        @@media only screen and (max-width: 1000px) {
+            .generic-container.@Model.GuidId { min-height: @Model.TabletBgImageHeight } }
+        @@media only screen and (max-width: 750px) {
+            .generic-container.@Model.GuidId { min-height: @Model.MobileBgImageHeight } }
+    </style>
+}
+
+<div class="generic generic-container @Model.GuidId @Model.ContainerClass clearfix" style="@Model.InLineCss">
+    <div class="row @Model.Margins @Model.CssClasses">
+        @Html.Sitecore().Placeholder(Model.Placeholder)
+    </div>
+</div>
